@@ -29,6 +29,7 @@ public class ItemServiceImpl implements ItemService {
         item.setStatus(itemRequest.getStatus());
         item.setReward(itemRequest.getReward());
         item.setPostedBy(postedBy);
+        item.setImageUrl(itemRequest.getImageUrl());
         item.setApproved(false); // New items need approval
         item.setCreatedAt(LocalDateTime.now());
         item.setUpdatedAt(LocalDateTime.now());
@@ -120,6 +121,7 @@ public class ItemServiceImpl implements ItemService {
         item.setCategory(itemRequest.getCategory());
         item.setStatus(itemRequest.getStatus());
         item.setReward(itemRequest.getReward());
+        item.setImageUrl(itemRequest.getImageUrl());
         item.setUpdatedAt(LocalDateTime.now());
 
         Item updated = itemRepository.save(item);

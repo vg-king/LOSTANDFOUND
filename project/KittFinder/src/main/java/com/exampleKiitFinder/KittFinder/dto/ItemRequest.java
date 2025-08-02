@@ -7,16 +7,18 @@ public class ItemRequest {
     private String category;
     private String status;
     private Double reward;
+    private String imageUrl;
 
 public ItemRequest(){}
 
-    public ItemRequest(String title, String description, String location, String category, String status, Double reward) {
+    public ItemRequest(String title, String description, String location, String category, String status, Double reward,String imageUrl) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.category = category;
         this.status = status;
         this.reward = reward;
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
@@ -65,5 +67,13 @@ public ItemRequest(){}
 
     public void setReward(Double reward) {
         this.reward = reward;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

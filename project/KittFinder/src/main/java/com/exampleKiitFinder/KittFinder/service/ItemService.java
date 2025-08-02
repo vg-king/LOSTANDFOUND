@@ -17,4 +17,5 @@ public interface ItemService {
     List<ItemResponse> getItemsByStatus(String status);
     List<ItemResponse> getItemsByCategory(String category);
     List<ItemResponse> searchItemsByLocation(String location);
+
 }
