@@ -1,6 +1,7 @@
 package com.exampleKiitFinder.KittFinder.dto;
 
 public class ItemRequest {
+
     private String title;
     private String description;
     private String location;

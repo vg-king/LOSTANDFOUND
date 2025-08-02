@@ -79,7 +79,12 @@ public class ItemController {
         List<ItemResponse> items = itemService.getItemsByUser(currentUser);
         return ResponseEntity.ok(items);
     }
-    
+    // ItemController.java mein ye method add karo
+    @GetMapping("/search")
+    public ResponseEntity<List<ItemResponse>> searchItems(@RequestParam String query) {
+        List<ItemResponse> items = itemService.searchItemsByLocation(query);
+        return ResponseEntity.ok(items);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<ItemResponse> updateItem(@PathVariable Long id, @RequestBody ItemRequest itemRequest){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

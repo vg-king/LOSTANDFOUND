@@ -45,6 +45,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/create-admin").permitAll()
 
+                        // Image upload endpoint - require authentication (any role)
+                        .requestMatchers("/api/upload/**").authenticated()
+
                         // Admin endpoints - require ADMIN role
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
