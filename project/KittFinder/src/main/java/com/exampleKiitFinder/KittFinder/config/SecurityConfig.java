@@ -73,6 +73,7 @@ public class SecurityConfig {
 
         // Allow multiple origins for development
         configuration.setAllowedOriginPatterns(Arrays.asList(
+
                 "http://localhost:3000",
                 "http://localhost:3001",
                 "http://localhost:8081",
