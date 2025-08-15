@@ -10,34 +10,20 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns(
+                .allowedOrigins(
                         // Local development origins
                         "http://localhost:3000",
                         "http://localhost:3001",
-                        "http://localhost:8080",    // Add this - your current frontend
-                        "http://localhost:5173",    // Vite default
+                        "http://localhost:8080",
+                        "http://localhost:5173",
                         "http://127.0.0.1:3000",
-                        "http://127.0.0.1:8080",    // Add this too
+                        "http://127.0.0.1:8080",
                         // Production origins
-                        "https://kiitfinderui-abbi.vercel.app",
-                        "https://*.vercel.app",
-                        // Your deployed backend (if frontend calls it)
-                        "https://lostandfound-1-p1l9.onrender.com"
+                        "https://kiitfinderui-abbi.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                .allowedHeaders(
-                        "Authorization",
-                        "Content-Type",
-                        "Accept",
-                        "Origin",
-                        "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers"
-                )
-                .exposedHeaders(
-                        "Access-Control-Allow-Origin",
-                        "Access-Control-Allow-Credentials",
-                        "Authorization"
-                )
+                .allowedHeaders("*")
+                .exposedHeaders("Authorization")
                 .allowCredentials(true)
                 .maxAge(3600);
     }
