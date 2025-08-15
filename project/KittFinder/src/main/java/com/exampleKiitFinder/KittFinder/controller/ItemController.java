@@ -18,7 +18,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/items")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://kiitfinderui-abbi.vercel.app")
 public class ItemController {
     @Autowired
     private ItemService itemService;

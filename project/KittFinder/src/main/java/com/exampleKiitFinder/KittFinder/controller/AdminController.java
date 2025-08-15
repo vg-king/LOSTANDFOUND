@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://kiitfinderui-abbi.vercel.app")
 @RequestMapping("/api/admin")
 public class AdminController {
     @Autowired

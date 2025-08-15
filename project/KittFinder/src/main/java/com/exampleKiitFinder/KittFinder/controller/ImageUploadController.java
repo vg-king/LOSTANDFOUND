@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/upload")
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://kiitfinderui-abbi.vercel.app")
 public class ImageUploadController {
     @Autowired
     private CloudinaryService cloudinaryService;

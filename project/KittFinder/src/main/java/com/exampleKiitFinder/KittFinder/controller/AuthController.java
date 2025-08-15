@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "https://kiitfinderui-abbi.vercel.app")
 @RequestMapping("/api/auth")
 public class AuthController {
 
