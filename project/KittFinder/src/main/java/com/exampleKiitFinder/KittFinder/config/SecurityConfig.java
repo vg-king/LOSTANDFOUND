@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -41,9 +42,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints - allow without authentication
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/auth/register").permitAll()
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/create-admin").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/health").permitAll()
+
+                        // Handle preflight requests
+                        .requestMatchers("/**").permitAll()
 
                         // Image upload endpoint - require authentication (any role)
                         .requestMatchers("/api/upload/**").authenticated()
@@ -51,8 +54,8 @@ public class SecurityConfig {
                         // Admin endpoints - require ADMIN role
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                        // User endpoints - require USER role
-                        .requestMatchers("/api/users/**").hasRole("USER")
+                        // User endpoints - require USER role or ADMIN role
+                        .requestMatchers("/api/users/**").hasAnyRole("USER", "ADMIN")
 
                         // Item endpoints - require authentication (any role)
                         .requestMatchers("/api/items/**").authenticated()
@@ -71,32 +74,26 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Allow multiple origins for development
+        // Allow specific origins for development and production
         configuration.setAllowedOriginPatterns(Arrays.asList(
-
-                "http://localhost:3000",
-                "http://localhost:3001",
-                "http://localhost:8081",
-                "http://127.0.0.1:3000"
+                "http://localhost:*",
+                "http://127.0.0.1:*",
+                "https://kiitfinderui-abbi.vercel.app",
+                "https://*.vercel.app",
+                "https://lostandfound-1-p1l9.onrender.com"
         ));
 
         configuration.setAllowedMethods(Arrays.asList(
-                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
+                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"
         ));
 
-        configuration.setAllowedHeaders(Arrays.asList(
-                "Authorization",
-                "Content-Type",
-                "Accept",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-        ));
+        configuration.setAllowedHeaders(List.of("*"));
 
         configuration.setExposedHeaders(Arrays.asList(
                 "Access-Control-Allow-Origin",
                 "Access-Control-Allow-Credentials",
-                "Authorization"
+                "Authorization",
+                "Content-Type"
         ));
 
         configuration.setAllowCredentials(true);
