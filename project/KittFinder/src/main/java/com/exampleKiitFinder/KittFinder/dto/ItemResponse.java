@@ -9,17 +9,20 @@ public class ItemResponse {
     private String imageUrl;
     private String createAt;
     private String updatedAt;
+    private String createdAtFormatted; // User-friendly formatted date (e.g., "2 hours ago", "1 day ago")
     private Double reward;
     private String postedByName;
     private Long postedById;
     private boolean hasFoundMarkings; // New field to indicate if someone marked it as found
     private int foundMarkingsCount; // New field to show how many people marked it as found
+    private String status; // LOST, FOUND_PENDING, FOUND_CONFIRMED
 
     public ItemResponse(){}
 
     public ItemResponse(Long id, String name, String description, String location, String category,
-                        String imageUrl, String createAt, String updatedAt, Double reward,
-                        String postedByName, Long postedById, boolean hasFoundMarkings, int foundMarkingsCount) {
+                        String imageUrl, String createAt, String updatedAt, String createdAtFormatted, Double reward,
+                        String postedByName, Long postedById, boolean hasFoundMarkings, int foundMarkingsCount,
+                        String status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -28,19 +31,21 @@ public class ItemResponse {
         this.imageUrl = imageUrl;
         this.createAt = createAt;
         this.updatedAt = updatedAt;
+        this.createdAtFormatted = createdAtFormatted;
         this.reward = reward;
         this.postedByName = postedByName;
         this.postedById = postedById;
         this.hasFoundMarkings = hasFoundMarkings;
         this.foundMarkingsCount = foundMarkingsCount;
+        this.status = status;
     }
 
     // Constructor without found markings (for backward compatibility)
     public ItemResponse(Long id, String name, String description, String location, String category,
                         String imageUrl, String createAt, String updatedAt, Double reward,
                         String postedByName, Long postedById) {
-        this(id, name, description, location, category, imageUrl, createAt, updatedAt, reward,
-                postedByName, postedById, false, 0);
+        this(id, name, description, location, category, imageUrl, createAt, updatedAt, "Unknown", reward,
+                postedByName, postedById, false, 0, "LOST");
     }
 
     // All existing getters and setters...
@@ -108,6 +113,14 @@ public class ItemResponse {
         this.updatedAt = updatedAt;
     }
 
+    public String getCreatedAtFormatted() {
+        return createdAtFormatted;
+    }
+
+    public void setCreatedAtFormatted(String createdAtFormatted) {
+        this.createdAtFormatted = createdAtFormatted;
+    }
+
     public Double getReward() {
         return reward;
     }
@@ -147,5 +160,13 @@ public class ItemResponse {
 
     public void setFoundMarkingsCount(int foundMarkingsCount) {
         this.foundMarkingsCount = foundMarkingsCount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

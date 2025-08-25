@@ -86,6 +86,18 @@ public class ItemController {
         List<ItemResponse> items = itemService.searchItemsByLocation(query);
         return ResponseEntity.ok(items);
     }
+    
+    @GetMapping("/filter/category/{category}")
+    public ResponseEntity<List<ItemResponse>> getItemsByCategory(@PathVariable String category) {
+        List<ItemResponse> items = itemService.getItemsByCategory(category);
+        return ResponseEntity.ok(items);
+    }
+    
+    @GetMapping("/filter/status/{status}")
+    public ResponseEntity<List<ItemResponse>> getItemsByStatus(@PathVariable String status) {
+        List<ItemResponse> items = itemService.getItemsByStatus(status);
+        return ResponseEntity.ok(items);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<ItemResponse> updateItem(@PathVariable Long id, @RequestBody ItemRequest itemRequest){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

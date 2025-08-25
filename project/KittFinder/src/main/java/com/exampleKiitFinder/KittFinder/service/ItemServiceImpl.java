@@ -5,7 +5,9 @@ import com.exampleKiitFinder.KittFinder.Repo.ItemRepository;
 import com.exampleKiitFinder.KittFinder.dto.ItemRequest;
 import com.exampleKiitFinder.KittFinder.dto.ItemResponse;
 import com.exampleKiitFinder.KittFinder.modell.Item;
+import com.exampleKiitFinder.KittFinder.modell.ItemStatus;
 import com.exampleKiitFinder.KittFinder.modell.User;
+import com.exampleKiitFinder.KittFinder.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +95,18 @@ public class ItemServiceImpl implements ItemService {
         // Get found markings count for this item
         int foundMarkingsCount = foundRepository.findByItem(item).size();
         boolean hasFoundMarkings = foundMarkingsCount > 0;
+        
+        // Determine status based on found markings
+        String status = ItemStatus.LOST.getValue(); // Default status
+        if (hasFoundMarkings) {
+            // Check if any found record has both confirmations
+            boolean hasConfirmedFound = foundRepository.findByItemAndFinderConfirmedTrueAndOwnerConfirmedTrue(item).isPresent();
+            if (hasConfirmedFound) {
+                status = ItemStatus.FOUND_CONFIRMED.getValue();
+            } else {
+                status = ItemStatus.FOUND_PENDING.getValue();
+            }
+        }
 
         return new ItemResponse(
                 item.getId(),
@@ -103,11 +117,13 @@ public class ItemServiceImpl implements ItemService {
                 item.getImageUrl(),
                 item.getCreatedAt() != null ? item.getCreatedAt().toString() : null,
                 item.getUpdatedAt() != null ? item.getUpdatedAt().toString() : null,
+                DateUtil.formatTimeAgo(item.getCreatedAt()), // New formatted date field
                 item.getReward(),
                 item.getPostedBy() != null ? item.getPostedBy().getName() : null,
                 item.getPostedBy() != null ? item.getPostedBy().getId() : null,
                 hasFoundMarkings,
-                foundMarkingsCount
+                foundMarkingsCount,
+                status
         );
     }
 

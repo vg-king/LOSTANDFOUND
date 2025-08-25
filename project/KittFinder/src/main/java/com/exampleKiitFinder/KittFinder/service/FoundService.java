@@ -31,7 +31,7 @@ public class FoundService {
         if (existingFound.isPresent()){
             throw new RuntimeException("You have already  marked this item as found ");
         }
-        Found found = new Found(item,finder,item.getPostedBy(),request.getMessage());
+        Found found = new Found(item,finder,item.getReportedBy(),request.getMessage());
         Found saved = foundRepo.save(found);
         return mapToResponse(saved);
     }
