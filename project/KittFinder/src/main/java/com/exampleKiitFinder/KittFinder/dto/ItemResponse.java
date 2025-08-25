@@ -12,10 +12,14 @@ public class ItemResponse {
     private Double reward;
     private String postedByName;
     private Long postedById;
-    
+    private boolean hasFoundMarkings; // New field to indicate if someone marked it as found
+    private int foundMarkingsCount; // New field to show how many people marked it as found
+
     public ItemResponse(){}
 
-    public ItemResponse(Long id, String name, String description, String location, String category, String imageUrl, String createAt, String updatedAt, Double reward, String postedByName, Long postedById) {
+    public ItemResponse(Long id, String name, String description, String location, String category,
+                        String imageUrl, String createAt, String updatedAt, Double reward,
+                        String postedByName, Long postedById, boolean hasFoundMarkings, int foundMarkingsCount) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -27,8 +31,19 @@ public class ItemResponse {
         this.reward = reward;
         this.postedByName = postedByName;
         this.postedById = postedById;
+        this.hasFoundMarkings = hasFoundMarkings;
+        this.foundMarkingsCount = foundMarkingsCount;
     }
 
+    // Constructor without found markings (for backward compatibility)
+    public ItemResponse(Long id, String name, String description, String location, String category,
+                        String imageUrl, String createAt, String updatedAt, Double reward,
+                        String postedByName, Long postedById) {
+        this(id, name, description, location, category, imageUrl, createAt, updatedAt, reward,
+                postedByName, postedById, false, 0);
+    }
+
+    // All existing getters and setters...
     public Long getId() {
         return id;
     }
@@ -115,5 +130,22 @@ public class ItemResponse {
 
     public void setPostedById(Long postedById) {
         this.postedById = postedById;
+    }
+
+    // New getters and setters for found markings
+    public boolean isHasFoundMarkings() {
+        return hasFoundMarkings;
+    }
+
+    public void setHasFoundMarkings(boolean hasFoundMarkings) {
+        this.hasFoundMarkings = hasFoundMarkings;
+    }
+
+    public int getFoundMarkingsCount() {
+        return foundMarkingsCount;
+    }
+
+    public void setFoundMarkingsCount(int foundMarkingsCount) {
+        this.foundMarkingsCount = foundMarkingsCount;
     }
 }

@@ -1,7 +1,7 @@
 package com.exampleKiitFinder.KittFinder.dto;
 
 public class ItemRequest {
-
+    private String name;
     private String title;
     private String description;
     private String location;
@@ -12,14 +12,21 @@ public class ItemRequest {
 
 public ItemRequest(){}
 
-    public ItemRequest(String title, String description, String location, String category, String status, Double reward,String imageUrl) {
-        this.title = title;
+    public ItemRequest(String name,String title, String description, String location, String category, String status, Double reward,String imageUrl) {
+        this.name= name;
+    this.title = title;
         this.description = description;
         this.location = location;
         this.category = category;
         this.status = status;
         this.reward = reward;
         this.imageUrl = imageUrl;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.title = name;
     }
 
     public String getTitle() {

@@ -26,6 +26,7 @@ public class Item {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String category;
+    private String name;
     
     @ManyToOne
     @JoinColumn(name = "reported_by")
@@ -37,8 +38,9 @@ public class Item {
     
     public Item(){}
 
-    public Item(Long id, String title, String description, String imageUrl, String location, String status, boolean approved, LocalDateTime reportedAt, User reportedBy, Double reward, LocalDateTime createdAt, LocalDateTime updatedAt, String category, User postedBy) {
+    public Item(Long id, String name,String title, String description, String imageUrl, String location, String status, boolean approved, LocalDateTime reportedAt, User reportedBy, Double reward, LocalDateTime createdAt, LocalDateTime updatedAt, String category, User postedBy) {
         this.id = id;
+        this.name = name;
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
@@ -56,6 +58,12 @@ public class Item {
 
     public Long getId() {
         return id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String title) {
+        this.title = name;
     }
 
     public void setId(Long id) {

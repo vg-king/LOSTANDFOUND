@@ -1,5 +1,6 @@
 package com.exampleKiitFinder.KittFinder.service;
 
+import com.exampleKiitFinder.KittFinder.Repo.FoundRepo;
 import com.exampleKiitFinder.KittFinder.Repo.ItemRepository;
 import com.exampleKiitFinder.KittFinder.dto.ItemRequest;
 import com.exampleKiitFinder.KittFinder.dto.ItemResponse;
@@ -10,19 +11,19 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public ItemResponse createItem(ItemRequest itemRequest, User postedBy){
+    @Autowired
+    private FoundRepo foundRepository; // Add this
+
+    public ItemResponse createItem(ItemRequest itemRequest, User postedBy) {
         Item item = new Item();
         item.setTitle(itemRequest.getTitle());
-
         item.setDescription(itemRequest.getDescription());
         item.setLocation(itemRequest.getLocation());
         item.setCategory(itemRequest.getCategory());
@@ -36,7 +37,6 @@ public class ItemServiceImpl implements ItemService {
 
         Item saved = itemRepository.save(item);
         return mapToResponse(saved);
-
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemResponse getItemById(Long id) {
         Item item = itemRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Item not found with id: "+id));
+                .orElseThrow(() -> new RuntimeException("Item not found with id: " + id));
         return mapToResponse(item);
     }
 
@@ -89,7 +89,11 @@ public class ItemServiceImpl implements ItemService {
                 .collect(Collectors.toList());
     }
 
-    private ItemResponse mapToResponse(Item item){
+    private ItemResponse mapToResponse(Item item) {
+        // Get found markings count for this item
+        int foundMarkingsCount = foundRepository.findByItem(item).size();
+        boolean hasFoundMarkings = foundMarkingsCount > 0;
+
         return new ItemResponse(
                 item.getId(),
                 item.getTitle(),
@@ -101,7 +105,9 @@ public class ItemServiceImpl implements ItemService {
                 item.getUpdatedAt() != null ? item.getUpdatedAt().toString() : null,
                 item.getReward(),
                 item.getPostedBy() != null ? item.getPostedBy().getName() : null,
-                item.getPostedBy() != null ? item.getPostedBy().getId() : null
+                item.getPostedBy() != null ? item.getPostedBy().getId() : null,
+                hasFoundMarkings,
+                foundMarkingsCount
         );
     }
 
