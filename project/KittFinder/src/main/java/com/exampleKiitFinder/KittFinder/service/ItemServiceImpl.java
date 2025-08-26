@@ -32,6 +32,7 @@ public class ItemServiceImpl implements ItemService {
         item.setStatus(itemRequest.getStatus());
         item.setReward(itemRequest.getReward());
         item.setPostedBy(postedBy);
+        item.setReportedBy(postedBy); // ✅ Add this line - same user for both fields
         item.setImageUrl(itemRequest.getImageUrl());
         item.setApproved(false); // New items need approval
         item.setCreatedAt(LocalDateTime.now());

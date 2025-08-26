@@ -3,7 +3,8 @@ package com.exampleKiitFinder.KittFinder.modell;
 public enum ItemStatus {
     LOST("LOST"),
     FOUND_PENDING("FOUND_PENDING"),
-    FOUND_CONFIRMED("FOUND_CONFIRMED");
+    FOUND_CONFIRMED("FOUND_CONFIRMED"),
+    RESOLVED("RESOLVED");
 
     private final String value;
 

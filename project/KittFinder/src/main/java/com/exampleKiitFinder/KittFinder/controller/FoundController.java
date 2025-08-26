@@ -25,14 +25,17 @@ public class FoundController {
     private UserService userService;
 
     @PostMapping("/mark")
-    public ResponseEntity<FoundResponse> markItemAsFound(@RequestBody FoundRequest request){
+    public ResponseEntity<?> markItemAsFound(@RequestBody FoundRequest request){
         try {
             User currentUser = getCurrentUser();
             FoundResponse response = foundService.markItemAsFound(request,currentUser);
             return ResponseEntity.ok(response);
         }
         catch (Exception e){
-            return ResponseEntity.badRequest().body(null );
+            // Log the actual error for debugging
+            System.err.println("Error in markItemAsFound: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
     @PostMapping("/confirm/{foundId}")
@@ -49,10 +52,17 @@ public class FoundController {
                     "message", message,
                     "bothConfirmed", String.valueOf(response.isBothConfirmed())
             ));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            // Log the actual error for debugging
+            System.err.println("Error in confirmFound: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (Exception e) {
+            // Catch any other exceptions including Hibernate issues
+            System.err.println("Unexpected error in confirmFound: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("error", "An unexpected error occurred: " + e.getMessage()));
         }
-
     }
     @GetMapping("/pending-confirmation")
     public ResponseEntity<List<FoundResponse>> getPendingConfirmations(){
